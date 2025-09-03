@@ -1,0 +1,11 @@
+
+.col-app {
+    display: flex;
+    width: 100%;
+    
+}
+
+.app {
+    display: flex;
+    margin-right: 150px;
+}
