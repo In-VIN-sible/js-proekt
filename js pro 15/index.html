@@ -1,19 +1,44 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>User Table</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <body>
-  <h1>Наші користувачі</h1>
-  <div id="app"></div>
-    
-    <script src="script.js"></script>
-</body>
-    
-</html>
+<main>
+    <button id="toggleBtn">Show Users</button>
 
+    <section id="card" class="card" aria-hidden="true">
+        <div class="card-header">
+            <div>
+                <h1>All Customers</h1>
+                <p class="sub">Active Members</p>
+            </div>
+            <div class="search">
+                <input id="search" placeholder="Search" />
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table id="userTable" class="user-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody id="app"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script src="script.js" defer></script>
+</body>
+</html>
