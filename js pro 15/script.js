@@ -1,24 +1,58 @@
- async function loadUsers() {
-      try {
-        const response = await fetch("https://jsonplaceholder.typicode.com/users");
-        const users = await response.json();
+let dataLoaded = false;
 
-        const app = document.getElementById("app");
+const toggleBtn = document.getElementById('toggleBtn');
+const card = document.getElementById('card');
+const app = document.getElementById('app');
+const search = document.getElementById('search');
 
-        users.forEach(user => {
-          const div = document.createElement("div");
-          div.className = "user";
-          div.innerHTML = `
-            <h3>${user.name}</h3>
-            <p><b>Email:</b> ${user.email}</p>
-            <p><b>Місто:</b> ${user.address.city}</p>
-          `;
-          app.appendChild(div);
-        });
-      } catch (error) {
-        console.error("Помилка при завантаженні користувачів:", error);
-      }
+toggleBtn.addEventListener('click', () => {
+    const opened = card.classList.toggle('open');
+    card.setAttribute('aria-hidden', String(!opened));
+    toggleBtn.textContent = opened ? 'Hide Users' : 'Show Users';
+    if (opened && !dataLoaded) loadUsers();
+});
+
+async function loadUsers() {
+    try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/users');
+        const users = await res.json();
+        renderRows(users);
+        dataLoaded = true;
+    } catch (error) {
+        console.error('Error fetching users:', error);
     }
+}
 
-    loadUsers();
+function renderRows(users) {
+    app.innerHTML = '';
+    users.forEach((u, i) => {
+        const tr = document.createElement('tr');
+        const status = i % 2 === 0 ? 'Active' : 'Inactive';
+        tr.innerHTML = `
+      <td>${escapeHtml(u.name)}</td>
+      <td>${escapeHtml(u.company?.name || '')}</td>
+      <td>${escapeHtml(u.phone)}</td>
+      <td>${escapeHtml(u.email)}</td>
+      <td>${escapeHtml(u.address?.city || '')}</td>
+      <td><span class="status ${status.toLowerCase()}">${status}</span></td>
+    `;
+        app.appendChild(tr);
+    });
+}
+
+function escapeHtml(str) {
+    return str.replace(/[&<>"']/g, function (m) {
+        return ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        })[m];
+    });
+
+}
+
+
+
 
